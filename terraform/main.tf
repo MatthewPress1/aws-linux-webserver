@@ -9,7 +9,7 @@ terraform {
 }
 
 provider "aws" {
-  region = "var.region"
+  region = var.region
 }
 
 
@@ -30,8 +30,8 @@ data "aws_ami" "ubuntu" {
 }
 
 
-resource "aws_key_pair" "existing" {
-  key_name   = "linuxskillup2"
+data "aws_key_pair" "existing" {
+  key_name   = "linuxskillup"
 }
 
 
