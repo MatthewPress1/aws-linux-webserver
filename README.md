@@ -1,4 +1,4 @@
-# Linux Web Server on AWS
+# Linux Web Server on AWS deployed with Terraform
 
 ## Overview
 A hardened Apache web server deployed on AWS EC2 running Ubuntu, accessible at [matthewpress.net](https://matthewpress.net) with HTTPS via Let's Encrypt.
@@ -9,6 +9,7 @@ A hardened Apache web server deployed on AWS EC2 running Ubuntu, accessible at [
 - Let's Encrypt / Certbot
 - UFW Firewall
 - Namecheap DNS
+- Terraform
 
 ## Architecture
 - EC2 instance with Elastic IP
@@ -47,12 +48,15 @@ fi
 Host aws
     HostName <your-ip>
     User ubuntu
-```
+``` 
 
 ## Challenges & Troubleshooting
 I'm more comfortable with Azure but wanted to try AWS so I had to learn the console and make sure I was not going to get charged a bunch of money. I followed the free tier as best I could and setup budgets to alert me when my VM had hit a certain cost.
 
 After I installed apache I wanted to see my website, but it wasn't loading the page. So I checked the status of the service, it said it was running. I thought about it for a few seconds and realized that I needed to add the allow rules for HTTP and HTTPS in the security group on the AWS console. 
+
+## Deploying With Terraform
+Once I finished the project, I wanted to challenge myself to deploy everything with Terraform. The Terraform Documentation and Registry helped me learn the structure and commands that I needed to execute. I successfully deployed the instance, security group, and elastic IP. I researched how to get the newly deployed VM up and running and came across startup scripts. I added the script to the instance in the main.tf file, and on launch, the VM provisions as the same hardened webserver that I previous built. 
 
 ## What I Learned
 The navigation and setup of the AWS VM.
