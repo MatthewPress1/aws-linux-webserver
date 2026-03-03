@@ -1,3 +1,4 @@
+# Configures Terraforms behavior for versions and AWS as the provider
 terraform {
   required_providers {
     aws = {
@@ -12,7 +13,7 @@ provider "aws" {
   region = var.region
 }
 
-
+# Fetching ami value for the correct Ubuntu image
 data "aws_ami" "ubuntu" {
   most_recent = true
 
@@ -29,12 +30,12 @@ data "aws_ami" "ubuntu" {
   owners = ["099720109477"] # Canonical
 }
 
-
+# Fetching the exisiting key-pair
 data "aws_key_pair" "existing" {
-  key_name   = "linuxskillup"
+  key_name   = "<key-pair-name>"
 }
 
-
+# Creates a t3.micro instance and runs the user_data.sh script when running
 resource "aws_instance" "web" {
   ami           	 = data.aws_ami.ubuntu.id
   key_name      	 = data.aws_key_pair.existing.key_name
@@ -47,7 +48,7 @@ resource "aws_instance" "web" {
   }
 }
 
-
+# Defines security rules for the security group
 resource "aws_security_group" "web_sg" {
   name        = "web_sg"
   description = "Allow SSH, HTTP, HTTPS"
@@ -81,7 +82,7 @@ resource "aws_security_group" "web_sg" {
   }
 }
 
-
+# Creates an Elastic IP for the instance
 resource "aws_eip" "web_ip" {
   instance = aws_instance.web.id
 
